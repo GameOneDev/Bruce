@@ -75,7 +75,13 @@ cd sip-client
 
 ### 2. Configure Settings
 
-Edit `include/config.h` to set your credentials:
+Copy the example configuration file and edit it with your credentials:
+
+```bash
+cp include/config.example.h include/config.h
+```
+
+Then edit `include/config.h` to set your credentials:
 
 ```cpp
 // WiFi Configuration
