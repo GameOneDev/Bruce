@@ -358,6 +358,7 @@ UDP Reception
 4. **Multiple Calls**: Only one call at a time is supported.
 5. **Authentication**: Basic authentication support only (no digest authentication).
 6. **NAT Traversal**: No STUN/TURN support for complex NAT scenarios.
+7. **ESP-IDF Compatibility**: I2S microphone capture uses legacy ESP-IDF API. On newer ESP32 variants (ESP32-S3, etc.) with ESP-IDF 4.4+, audio capture is disabled and RTP packets contain silence. For full audio support on these platforms, the I2S code needs to be updated to use the new I2S driver API.
 
 ## Future Enhancements
 

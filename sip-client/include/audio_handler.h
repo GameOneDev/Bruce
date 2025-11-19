@@ -13,7 +13,17 @@
 #define AUDIO_HANDLER_H
 
 #include <Arduino.h>
-#include <driver/i2s.h>
+
+// I2S driver compatibility for different ESP32 variants
+#if ESP_IDF_VERSION >= ESP_IDF_VERSION_VAL(4, 4, 0)
+    // For newer ESP-IDF versions (ESP32-S3, etc.)
+    #include <driver/i2s_std.h>
+    #include <driver/i2s_pdm.h>
+#else
+    // For older ESP-IDF versions (ESP32, ESP32-S2)
+    #include <driver/i2s.h>
+#endif
+
 #include <WiFiUdp.h>
 #include "config.h"
 
