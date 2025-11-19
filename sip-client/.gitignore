@@ -30,3 +30,7 @@ __pycache__/
 *.tmp
 *.temp
 *.log
+
+# User configuration (contains credentials)
+# Use config.example.h as template
+include/config.h

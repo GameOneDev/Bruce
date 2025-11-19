@@ -81,6 +81,8 @@ Copy the example configuration file and edit it with your credentials:
 cp include/config.example.h include/config.h
 ```
 
+**Note:** The `config.h` file is excluded from git to protect your credentials. Always use `config.example.h` as the template.
+
 Then edit `include/config.h` to set your credentials:
 
 ```cpp
