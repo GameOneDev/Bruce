@@ -19,10 +19,11 @@ A complete Session Initiation Protocol (SIP) client implementation for the M5Sta
 
 ### ✅ Audio Handling
 - **Input**: I2S microphone (SPM1423) with 8kHz sampling
-- **Output**: Built-in speaker/buzzer
+- **Output**: Built-in buzzer (tone generation only - NOT a speaker)
 - **Codec**: G.711 μ-law/A-law compression
 - **Protocol**: RTP (Real-time Transport Protocol) for audio streaming
 - Low-latency real-time audio processing
+- **Note**: Audio playback requires external speaker (buzzer cannot play voice audio)
 
 ### ✅ User Interface
 - Status display showing:
@@ -49,13 +50,15 @@ Interactive serial console for advanced control:
 - **M5Stack StickC Plus2** (ESP32-PICO with built-in peripherals)
   - Display: ST7789 135x240 TFT LCD
   - Microphone: SPM1423 I2S PDM Microphone
-  - Speaker: Built-in buzzer
+  - Buzzer: GPIO 2 (tone generation only - **NOT a speaker**)
   - Buttons: A, B, and Power buttons
   - Battery: Built-in rechargeable battery
 
-### Optional Hardware
+### Optional Hardware (Recommended)
+- **External speaker** - **REQUIRED for audio playback** (can be connected via Grove port with I2S DAC or analog amplifier)
+  - The M5StickCPlus2 only has a buzzer, which cannot play voice audio
+  - For two-way voice calls, an external speaker is necessary
 - External antenna for better WiFi range
-- External speaker for better audio quality (can be connected via Grove port)
 
 ## Software Requirements
 
@@ -151,8 +154,10 @@ CALL sip:1002@yourdomain.com
 
 ### During a Call
 
-- **Audio**: Speak into the built-in microphone
-- **Listen**: Audio plays through the built-in speaker
+- **Audio Input**: Speak into the built-in microphone
+- **Audio Output**: **Requires external speaker** (buzzer cannot play voice audio)
+  - The M5StickCPlus2's buzzer can only generate tones, not play voice
+  - Connect an external speaker via Grove port for audio playback
 - **Hang up**: Press Button B to end the call
 - **Call duration**: Displayed on screen in MM:SS format
 
@@ -268,9 +273,10 @@ If your SIP server is on a different network, ensure these ports are forwarded:
 ### No Audio During Call
 
 **Problem**: Call connects but no audio
+- **Solution**: **Connect external speaker** - M5StickCPlus2 only has a buzzer (cannot play voice audio)
 - **Solution**: Verify RTP ports are not blocked by firewall
 - **Solution**: Check microphone is working (test with other M5Stack apps)
-- **Solution**: Increase speaker volume in code (SPEAKER_VOLUME)
+- **Solution**: For audio playback, connect I2S DAC or analog amplifier to Grove port
 
 ### Call Doesn't Connect
 
@@ -308,7 +314,7 @@ UDP Reception
     → RTP Depacketization
     → G.711 Decoding
     → Audio Buffer
-    → Speaker Output
+    → External Speaker Output (buzzer cannot play audio)
 ```
 
 ### SIP Call Flow
@@ -342,7 +348,7 @@ UDP Reception
 | Display CLK | 13 | SPI Clock |
 | Mic WS | 34 | I2S Word Select (L/R) |
 | Mic CLK | 0 | I2S Serial Clock |
-| Buzzer | 2 | Speaker Output |
+| Buzzer | 2 | Buzzer Output (tone only - NOT a speaker) |
 | Button A | 37 | Call/Answer Button |
 | Button B | 39 | Hangup Button |
 | Button PWR | 35 | Power Button |
@@ -352,7 +358,7 @@ UDP Reception
 
 ## Known Limitations
 
-1. **Audio Quality**: The built-in speaker has limited quality. External speaker recommended for better audio.
+1. **No Built-in Audio Playback**: The M5StickCPlus2 **does NOT have a speaker**. It only has a buzzer on GPIO 2 that can generate simple tones. **For audio playback during calls, you MUST connect an external speaker** via the Grove port using an I2S DAC or analog amplifier.
 2. **Codec Support**: Currently only G.711 μ-law/A-law is supported. More codecs (G.722, Opus) could be added.
 3. **DTMF**: DTMF tone generation is not yet implemented.
 4. **Multiple Calls**: Only one call at a time is supported.

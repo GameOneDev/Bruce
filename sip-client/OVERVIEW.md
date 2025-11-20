@@ -17,7 +17,7 @@ This is a complete Session Initiation Protocol (SIP) client implementation for t
 │  │  UI Handler  │  │  SIP Client  │  │    Audio     │ │
 │  │              │  │              │  │   Handler    │ │
 │  │  - Display   │  │  - REGISTER  │  │  - I2S Mic   │ │
-│  │  - Buttons   │  │  - INVITE    │  │  - Speaker   │ │
+│  │  - Buttons   │  │  - INVITE    │  │  - Buzzer    │ │
 │  │  - Status    │  │  - BYE       │  │  - G.711     │ │
 │  │              │  │  - Response  │  │  - RTP       │ │
 │  └──────┬───────┘  └──────┬───────┘  └──────┬───────┘ │
@@ -97,8 +97,8 @@ Outgoing Audio:
 
 Incoming Audio:
 ┌─────────────┐    ┌──────────┐    ┌──────────┐    ┌─────────┐
-│   Speaker   │<───│ Speaker  │<───│ G.711    │<───│   RTP   │
-│  (Buzzer)   │    │  Output  │    │ Decode   │    │ Packet  │
+│   Buzzer   │<───│ NO Audio  │<───│ G.711    │<───│   RTP   │
+│  (GPIO 2)   │    │  Playback (N/A)  │    │ Decode   │    │ Packet  │
 └─────────────┘    └──────────┘    └──────────┘    └────┬────┘
                                                          ^
                                                          │
@@ -167,9 +167,10 @@ sip-client/
 - Mono channel
 
 **Output:**
-- Built-in buzzer/speaker
-- GPIO-based output
-- PWM generation (simplified)
+- Built-in buzzer only (GPIO 2)
+- Tone generation capability
+- **NO audio playback** (buzzer cannot play voice)
+- External speaker required via Grove port
 
 **Codec:**
 - G.711 μ-law (North America standard)
@@ -229,7 +230,7 @@ sip-client/
 | **Audio** | | |
 | Mic WS | 34 | I2S Word Select |
 | Mic CLK | 0 | I2S Clock |
-| Speaker | 2 | PWM Output |
+| Buzzer | 2 | Tone generation (NOT a speaker) |
 | **Buttons** | | |
 | Button A | 37 | Call/Answer |
 | Button B | 39 | Hang up |
@@ -260,7 +261,7 @@ sip-client/
 | AUDIO_CODEC_MULAW | Codec selection | 1 (μ-law) |
 | AUDIO_SAMPLE_RATE | Sample rate | 8000 Hz |
 | AUDIO_BUFFER_SIZE | Buffer size | 160 samples |
-| SPEAKER_VOLUME | Output volume | 50 (0-100) |
+| BUZZER_ENABLED | Enable buzzer for indicators | 1 |
 
 ### Debug Settings
 
@@ -287,8 +288,10 @@ sip-client/
 | Direction | Bandwidth |
 |-----------|-----------|
 | Upstream (mic) | ~64 kbps |
-| Downstream (speaker) | ~64 kbps |
+| Downstream (RTP received) | ~64 kbps |
 | Total | ~128 kbps |
+
+Note: Audio playback not available (buzzer only)
 
 ### Latency
 
@@ -353,11 +356,11 @@ Currently manual testing:
 3. **Basic auth only** - No digest authentication
 4. **No NAT traversal** - No STUN/TURN support
 5. **Limited codecs** - Only G.711
-6. **Speaker quality** - Built-in speaker has limitations
+6. **NO built-in speaker** - M5StickCPlus2 only has buzzer (GPIO 2) for tones, cannot play voice audio
 
 ### Workarounds
 
-1. **Better audio** - Use external speaker via Grove port
+1. **Audio playback** - **Connect external speaker via Grove port** (REQUIRED for hearing calls)
 2. **NAT issues** - Use port forwarding or local SIP server
 3. **Codec support** - Use G.711 on SIP server
 

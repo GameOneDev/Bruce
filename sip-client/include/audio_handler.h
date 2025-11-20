@@ -1,10 +1,10 @@
 /**
  * @file audio_handler.h
- * @brief Audio handling for SIP calls using I2S microphone and speaker
+ * @brief Audio handling for SIP calls using I2S microphone and buzzer
  * 
  * This module handles:
  * - I2S microphone input (SPM1423)
- * - Speaker output (via PWM/DAC)
+ * - Buzzer output (GPIO 2 - tone generation only, no full audio playback)
  * - G.711 codec (μ-law/A-law)
  * - RTP packet transmission and reception
  */
@@ -81,7 +81,7 @@ private:
     
     // I2S configuration
     bool initMicrophone();
-    bool initSpeaker();
+    bool initBuzzer();
     
     // Audio processing
     void captureAudio();

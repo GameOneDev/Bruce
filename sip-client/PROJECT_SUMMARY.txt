@@ -32,7 +32,7 @@ DELIVERABLES
 
 4. AUDIO HANDLING
    ✅ I2S microphone input (SPM1423)
-   ✅ Speaker output (buzzer GPIO)
+   ✅ Buzzer output (GPIO 2 - tone only, NOT a speaker)
    ✅ G.711 μ-law codec
    ✅ G.711 A-law codec
    ✅ RTP packetization
@@ -186,7 +186,7 @@ DISPLAY:
 AUDIO:
 - Mic WS:        GPIO 34 (I2S Word Select)
 - Mic CLK:       GPIO 0  (I2S Clock)
-- Speaker:       GPIO 2  (PWM Output)
+- Buzzer:        GPIO 2  (Tone generation - NO audio playback)
 
 BUTTONS:
 - Button A:      GPIO 37 (Call/Answer)
@@ -301,10 +301,10 @@ KNOWN LIMITATIONS
 3. Basic authentication only (digest auth planned)
 4. No NAT traversal (STUN/TURN planned)
 5. G.711 codec only (more codecs planned)
-6. Built-in speaker has limited quality
+6. NO built-in speaker - only buzzer for tones
 
 WORKAROUNDS:
-- Use external speaker for better audio
+- External speaker REQUIRED for audio playback
 - Use local SIP server or port forwarding
 - Ensure G.711 codec on SIP server
 
@@ -362,7 +362,7 @@ REQUIREMENTS:
 ✅ Outgoing calls
 ✅ Incoming calls
 ✅ I2S microphone input
-✅ Speaker output
+✅ Buzzer output (tone generation only)
 ✅ Real-time audio streaming
 ✅ Display with status
 ✅ Button controls

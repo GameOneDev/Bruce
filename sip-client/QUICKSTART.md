@@ -77,8 +77,11 @@ pio device monitor
 │   [A]  [PWR]  [B]   │  ← Buttons
 │                     │
 │   🎤 Microphone     │  ← Built-in mic
-│   🔊 Speaker        │  ← Built-in speaker
+│   🔔 Buzzer (GPIO2) │  ← Tone only (NOT speaker)
 └─────────────────────┘
+
+⚠️  NOTE: No built-in speaker! Only buzzer for tones.
+    For audio playback, connect external speaker via Grove port.
 ```
 
 ### Button Functions
@@ -156,7 +159,8 @@ Solution: Check firewall allows UDP ports 10000-20000
 
 ### Problem: Can't hear caller
 ```
-Solution: Increase volume in config, check speaker connection
+Solution: M5StickCPlus2 has NO speaker! Connect external speaker via Grove port.
+          The buzzer (GPIO 2) can only generate tones, not play voice audio.
 ```
 
 ## Testing Your Setup
@@ -213,10 +217,12 @@ Once basic calling works:
 - Must be 2.4GHz network (ESP32 doesn't support 5GHz)
 - WPA2-PSK security recommended
 
-⚠️ **Audio Quality**
-- Built-in speaker has limited quality
-- External speaker recommended for better audio
-- Ensure good WiFi signal strength
+⚠️ **Audio Limitations**
+- **NO built-in speaker** - M5StickCPlus2 only has a buzzer (GPIO 2)
+- Buzzer can only generate tones, NOT play voice audio
+- **External speaker REQUIRED** for audio playback during calls
+- Connect speaker via Grove port using I2S DAC or analog amplifier
+- Ensure good WiFi signal strength for audio quality
 
 ⚠️ **SIP Server**
 - Must be accessible from device's network

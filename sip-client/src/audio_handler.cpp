@@ -101,8 +101,8 @@ bool AudioHandler::begin() {
         return false;
     }
     
-    if (!initSpeaker()) {
-        Serial.println("Failed to initialize speaker");
+    if (!initBuzzer()) {
+        Serial.println("Failed to initialize buzzer");
         return false;
     }
     
@@ -158,9 +158,10 @@ bool AudioHandler::initMicrophone() {
 #endif
 }
 
-bool AudioHandler::initSpeaker() {
-    // For M5StickCPlus2, we'll use the built-in buzzer/speaker
-    // This is simplified - actual implementation would need proper DAC setup
+bool AudioHandler::initBuzzer() {
+    // For M5StickCPlus2, we only have a buzzer (GPIO 2), not a full speaker
+    // The buzzer can only generate tones, not play back full audio
+    // Audio playback would require external speaker via I2S DAC or analog output
     pinMode(BUZZ_PIN, OUTPUT);
     
     return true;
@@ -258,9 +259,11 @@ void AudioHandler::playAudio() {
 #endif
         }
         
-        // Play audio (simplified - actual implementation would use I2S DAC or PWM)
-        // For now, we'll just use the buzzer for tone generation
-        // This is a placeholder - real implementation would need proper audio output
+        // Audio playback not supported - M5StickCPlus2 only has a buzzer (GPIO 2)
+        // which can only generate simple tones, not play back voice audio.
+        // For full audio playback, an external speaker would need to be connected
+        // via I2S DAC or analog output through the Grove port.
+        // The decoded audio is available in spkBuffer[] but cannot be played.
     }
 }
 

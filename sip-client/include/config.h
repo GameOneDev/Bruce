@@ -63,8 +63,10 @@
 #define I2S_MIC_BITS          16
 #define I2S_MIC_CHANNELS      1
 
-// Speaker Configuration
-#define SPEAKER_VOLUME        50  // Volume level (0-100)
+// Buzzer Configuration (M5StickCPlus2 only has buzzer, not speaker)
+// Note: Buzzer can only generate tones, not play audio
+// For audio playback, connect external speaker via Grove port
+#define BUZZER_ENABLED        1   // Enable buzzer for call indicators
 
 // ============================================================================
 // UI Configuration

@@ -10,9 +10,12 @@
  * Hardware Features:
  * - Display: ST7789 135x240 TFT
  * - Microphone: SPM1423 I2S
- * - Speaker: Built-in buzzer/speaker
+ * - Buzzer: GPIO 2 (tone generation only - no audio playback)
  * - Buttons: A (GPIO37), B (GPIO39), Power (GPIO35)
  * - WiFi: ESP32 built-in
+ * 
+ * Note: M5StickCPlus2 does NOT have a speaker. It only has a buzzer for tones.
+ * For audio playback during calls, an external speaker is required via Grove port.
  * 
  * @author SIP Client Project
  * @date 2025
